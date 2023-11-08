@@ -46,6 +46,12 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+        <!-- trace -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
         <!-- spring addition -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
