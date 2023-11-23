@@ -58,49 +58,49 @@ import lombok.Getter;
  * @date 2023/11/22
  */
 @Getter
-public class Response<T> {
+public class MyResponse<T> {
 
     private Status status;
     private T data;
     private Long latency;
     private long timestamp = System.currentTimeMillis();
 
-    public Response() {
+    public MyResponse() {
     }
 
-    private Response(Status status, T data) {
+    private MyResponse(Status status, T data) {
         this.status = status;
         this.data = data;
     }
 
-    private Response(Status status, T data, long latency) {
+    private MyResponse(Status status, T data, long latency) {
         this.status = status;
         this.data = data;
         this.latency = latency;
     }
 
-    public static <T> Response<T> of(Status status, T data){
-        return new Response(status, data);
+    public static <T> MyResponse<T> of(Status status, T data){
+        return new MyResponse(status, data);
     }
 
-    public static <T> Response<T> of(Status status, T data, long latency){
-        return new Response(status, data, latency);
+    public static <T> MyResponse<T> of(Status status, T data, long latency){
+        return new MyResponse(status, data, latency);
     }
 
-    public static Response ofSuccess(){
-        return new Response<>(Status.SUCCESS, null);
+    public static MyResponse ofSuccess(){
+        return new MyResponse<>(Status.SUCCESS, null);
     }
 
-    public static <T> Response<T> ofSuccess(T t){
-        return new Response<>(Status.SUCCESS, t);
+    public static <T> MyResponse<T> ofSuccess(T t){
+        return new MyResponse<>(Status.SUCCESS, t);
     }
 
-    public static Response ofFail(){
-        return new Response<>(Status.FAIL, null);
+    public static MyResponse ofFail(){
+        return new MyResponse<>(Status.FAIL, null);
     }
 
-    public static <T> Response<T> ofFail(T t){
-        return new Response<>(Status.FAIL, t);
+    public static <T> MyResponse<T> ofFail(T t){
+        return new MyResponse<>(Status.FAIL, t);
     }
 
 }

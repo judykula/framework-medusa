@@ -13,6 +13,7 @@ package com.jwy.medusa;
 
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
+import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.utils.SpringContextUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -29,7 +30,7 @@ import org.springframework.context.annotation.Import;
  * @version 1.0
  * @date 2023/10/26
  */
-@Import({MyConsulConfiguration.class})
+@Import({MyConsulConfiguration.class, MyMvcConfiguration.class})
 public class MyCoreAutoConfiguration {
 
     @Bean
