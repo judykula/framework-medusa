@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0
  * @date 2023/10/27
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name = "my.extension.consul", matchIfMissing = true)
 public class MyConsulConfiguration {
 
