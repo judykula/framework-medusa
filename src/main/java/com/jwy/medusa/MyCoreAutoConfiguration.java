@@ -19,11 +19,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
+import com.jwy.medusa.mvc.MyAccessLogWebFilter;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.utils.SpringContextUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.server.WebFilter;
 
 import java.util.TimeZone;
 
@@ -53,6 +55,7 @@ public class MyCoreAutoConfiguration {
         return new AppStartedListener();
     }
 
+    // json custom
     //@Bean
     //public ObjectMapper objectMapper() {
     //    ObjectMapper mapper = new ObjectMapper();

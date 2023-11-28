@@ -12,11 +12,9 @@
 package com.jwy.medusa.mvc;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.codec.CodecCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.codec.ServerSentEventHttpMessageReader;
-import org.springframework.http.codec.ServerSentEventHttpMessageWriter;
+import org.springframework.web.server.WebFilter;
 
 /**
  * <p>
@@ -45,10 +43,9 @@ public class MyMvcConfiguration {
     //    };
     //}
 
-
-
-
-
-
+    @Bean
+    public WebFilter myAccessLogWebFilter(){
+        return new MyAccessLogWebFilter();
+    }
 
 }
