@@ -20,7 +20,11 @@ import reactor.core.publisher.Mono;
 
 /**
  * <p>
- *     log输出请求url
+ *     在log中打印所有请求
+ * </p>
+ * <p>
+ *      需要设置log level为debug级别，
+ *      比如这样：{@code  logging.level.com.jwy.medusa.mvc.MyAccessLogWebFilter=debug}
  * </p>
  *
  * @author Jiang Wanyu
