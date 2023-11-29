@@ -33,11 +33,14 @@ public class MyAccessLogWebFilter implements WebFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
-        String url = exchange.getRequest().getURI().toString();
+        String url = exchange.getRequest().getPath().toString();
+        String method = exchange.getRequest().getMethod().toString();
         String headers = exchange.getRequest().getHeaders().toString();
         String params = exchange.getRequest().getQueryParams().toString();
 
-        log.debug("【REQ200】【{}】【{}】【{}】", url, headers, params);
+        if(log.isDebugEnabled() && !url.startsWith("/actuator")){
+            log.debug("【REQ200】【{}】【{}】【{}】【{}】", url, method, headers, params);
+        }
 
         return chain.filter(exchange);
     }
