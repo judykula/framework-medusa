@@ -27,8 +27,11 @@ import lombok.Getter;
  * <p>
  *     可以如下方式生成：
  *     <pre>
- *         {@code Status.of(200, "xxx")} 或者 {@code Status.of(200)}
+ *         {@code MyStatus.of(200, "xxx")} 或者 {@code MyStatus.of(200)}
  *     </pre>
+ *
+ *     如果你定义了/已存在一个可以大体描述的定义：{@link MyStatusz}，建议这样使用：
+ *     {@code MyStatusz.XXX}
  * </p>
  *
  * @author Jiang Wanyu
@@ -36,33 +39,23 @@ import lombok.Getter;
  * @date 2023/11/22
  */
 @Getter
-public class Status {
-
-    /**
-     * 设置默认 SUCCESS 选项
-     */
-    public static Status SUCCESS = new Status(200, "SUCCESS");
-    /**
-     * 设置默认 FAIL 选项
-     */
-    public static Status FAIL = new Status(500, "FAIL");
-
+public class MyStatus {
     private Integer code;
     private String desc;
 
-    public Status() {
+    public MyStatus() {
     }
 
-    private Status(Integer code, String desc) {
+    private MyStatus(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }
 
-    public static Status of(int code, String desc){
-           return new Status(code, desc);
+    public static MyStatus of(int code, String desc){
+           return new MyStatus(code, desc);
     }
 
-    public static Status of(int code){
-        return new Status(code, null);
+    public static MyStatus of(int code){
+        return new MyStatus(code, null);
     }
 }

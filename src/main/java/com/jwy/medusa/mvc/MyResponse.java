@@ -18,7 +18,7 @@ import lombok.Getter;
  *     统一定义请求响应数据：{@code Response<T>}
  *     封装内容包括:
  *     <pre>
- *          {@link Status}：状态码
+ *          {@link MyStatus}：状态码
  *          T: data
  *          latency: 程序执行时间(optional)
  *          timestamp: 响应时的时间戳
@@ -26,7 +26,7 @@ import lombok.Getter;
  *     结构体[例]：
  *     <pre>
  *         {
- *             "status":
+ *             "mystatus":
  *                  {
  *                      code: ..., //int
  *                      desc: "...", //string
@@ -52,7 +52,7 @@ import lombok.Getter;
  *     </pre>
  * </p>
  *
- * @see Status
+ * @see MyStatus
  * @author Jiang Wanyu
  * @version 1.0
  * @date 2023/11/22
@@ -60,7 +60,7 @@ import lombok.Getter;
 @Getter
 public class MyResponse<T> {
 
-    private Status status;
+    private MyStatus mystatus;
     private T data;
     private Long latency;
     private long timestamp = System.currentTimeMillis();
@@ -68,39 +68,39 @@ public class MyResponse<T> {
     public MyResponse() {
     }
 
-    private MyResponse(Status status, T data) {
-        this.status = status;
+    private MyResponse(MyStatus status, T data) {
+        this.mystatus = status;
         this.data = data;
     }
 
-    private MyResponse(Status status, T data, long latency) {
-        this.status = status;
+    private MyResponse(MyStatus status, T data, long latency) {
+        this.mystatus = status;
         this.data = data;
         this.latency = latency;
     }
 
-    public static <T> MyResponse<T> of(Status status, T data){
+    public static <T> MyResponse<T> of(MyStatus status, T data){
         return new MyResponse(status, data);
     }
 
-    public static <T> MyResponse<T> of(Status status, T data, long latency){
+    public static <T> MyResponse<T> of(MyStatus status, T data, long latency){
         return new MyResponse(status, data, latency);
     }
 
     public static MyResponse ofSuccess(){
-        return new MyResponse<>(Status.SUCCESS, null);
+        return new MyResponse<>(MyStatusz.SUCCESS, null);
     }
 
     public static <T> MyResponse<T> ofSuccess(T t){
-        return new MyResponse<>(Status.SUCCESS, t);
+        return new MyResponse<>(MyStatusz.SUCCESS, t);
     }
 
     public static MyResponse ofFail(){
-        return new MyResponse<>(Status.FAIL, null);
+        return new MyResponse<>(MyStatusz.FAIL, null);
     }
 
     public static <T> MyResponse<T> ofFail(T t){
-        return new MyResponse<>(Status.FAIL, t);
+        return new MyResponse<>(MyStatusz.FAIL, t);
     }
 
 }

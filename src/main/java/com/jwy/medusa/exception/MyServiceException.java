@@ -11,6 +11,11 @@
  */
 package com.jwy.medusa.exception;
 
+import com.jwy.medusa.mvc.MyStatus;
+import com.jwy.medusa.mvc.MyStatusz;
+
+import java.util.Optional;
+
 /**
  * <p>
  *     核心"业务逻辑"异常
@@ -20,26 +25,33 @@ package com.jwy.medusa.exception;
  *
  *      规定"业务异常"在Service进行处理与抛出
  *
- *      规定所有业务异常都必须设定"code"，"message"可以忽略
+ *      规定所有业务异常都必须设定{@link MyStatus}状态
  * </p>
  *
+ * @see MyStatus
  * @author Jiang Wanyu
  * @version 1.0
  * @date 2023/10/30
  */
-public class MyServiceException extends RuntimeException{
+public class MyServiceException extends RuntimeException implements MyServiceExceptionDefinition{
 
-    private int code;
-    private String message;
+    private MyStatus status;
 
-    public MyServiceException(int code, String message) {
-        this.code = code;
-        this.message = message;
+    public MyServiceException() {
+        this(MyStatusz.FAIL);
     }
 
-    public MyServiceException(int code, String message, Throwable cause) {
+    public MyServiceException(MyStatus status) {
+        this.status = status;
+    }
+
+    public MyServiceException(MyStatus status, Throwable cause) {
         super(cause);
-        this.code = code;
-        this.message = message;
+        this.status = status;
+    }
+
+    @Override
+    public Optional<MyStatus> status() {
+        return Optional.ofNullable(this.status);
     }
 }
