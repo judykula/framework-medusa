@@ -11,40 +11,48 @@
  */
 package com.jwy.medusa;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
-import com.jwy.medusa.mvc.MyAccessLogWebFilter;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.utils.JsonUtils;
 import com.jwy.medusa.utils.SpringContextUtils;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.server.WebFilter;
-
-import java.util.TimeZone;
 
 /**
  * <p>
- *     fuxi项目的自动装配入口
+ *     medusa是"my"微服务架构的核心内容实现
+ *
+ *     这里包含了框架核心逻辑的定制化扩展，比如：
+ *     <pre>
+ *     consul注册{@link MyMvcConfiguration}
+ *     MVC请求&异常机制处理{@link MyMvcConfiguration}
+ *     上下文Context工具{@link com.jwy.medusa.utils.MyContextUtils}
+ *     关于JSON工具的定义等{@link JsonUtils}
+ *     </pre>
  * </p>
  * <p>
- *     fuxi负责架构的核心代码实现，比如统计的listener、filter、aop等
+ *     并不建议各个微服务定义"通用的"aop或者listener组件
+ * </p>
+ * <p>
+ *     关于{@link JsonUtils}，如果有必要的话，子项目可以自己重新定义，或者重新定义{@link ObjectMapper}
+ *     我们是支持覆盖的。
  * </p>
  *
+ * @see MyConsulConfiguration
+ * @see MyMvcConfiguration
  * @author Jiang Wanyu
  * @version 1.0
  * @date 2023/10/26
  */
 @Configuration(proxyBeanMethods = false)
 @Import({MyConsulConfiguration.class, MyMvcConfiguration.class})
+@AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)
 public class MyCoreAutoConfiguration {
 
     @Bean

@@ -13,7 +13,7 @@ package com.jwy.medusa.mvc;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
-import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
+import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.server.WebFilter;
@@ -59,7 +59,7 @@ public class MyMvcConfiguration {
     }
 
     @Bean
-    public DefaultErrorAttributes errorAttributes() {
+    public ErrorAttributes errorAttributes() {
         return new MyErrorAttributes();
     }
 
