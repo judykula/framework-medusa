@@ -14,6 +14,7 @@ package com.jwy.medusa;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
+import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.utils.JsonUtils;
 import com.jwy.medusa.utils.SpringContextUtils;
@@ -42,6 +43,11 @@ import org.springframework.context.annotation.Import;
  * <p>
  *     关于{@link JsonUtils}，如果有必要的话，子项目可以自己重新定义，或者重新定义{@link ObjectMapper}
  *     我们是支持覆盖的。
+ * </p>
+ * <p>
+ *     {@code @AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)}这句的作用是因为在{@link MyMvcConfiguration}中定义的
+ *     {@link MyErrorAttributes}是需要覆盖掉其"内"原有的{@link org.springframework.boot.web.reactive.error.ErrorAttributes}的，
+ *     所以必须在其初始化之前初始化
  * </p>
  *
  * @see MyConsulConfiguration
