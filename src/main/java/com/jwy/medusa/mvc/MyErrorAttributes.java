@@ -14,7 +14,6 @@ package com.jwy.medusa.mvc;
 import com.jwy.medusa.exception.MyServiceException;
 import com.jwy.medusa.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
@@ -32,6 +31,7 @@ import java.util.Objects;
  *     以符合服务之间的异常消息传递以及统一输出
  * </p>
  *
+ * @see DefaultErrorAttributes
  * @see MyMvcConfiguration
  * @author Jiang Wanyu
  * @version 1.0
@@ -68,9 +68,9 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
 
         Map<String, Object> errorAttributes = super.getErrorAttributes(request, options);
         Throwable error = super.getError(request);//这个会throw exception，但是先不处理吧
-        int statusCode = NumberUtils.toInt((String) errorAttributes.get("status"));
+        int statusCode = (int) errorAttributes.get("status");
 
-        log.warn("【ERROR063】Processing failed", error);
+        //log.warn("【ERROR063】Processing failed", error);
 
         /*虽然看到了super.getError()方法不会返回null，这里还是按照interface介绍，处理null问题*/
         if(Objects.isNull(error)){
