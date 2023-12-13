@@ -11,14 +11,22 @@
  */
 package com.jwy.medusa.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * <p>
  *     自定义"上下文"工具类，关于框架内生命周期内的自定义数据传递，以及一些需要在spring内使用的"utils"都放这里
  * </p>
  * <p>
- *     json，不建议使用fastjson，建议使用系统自带的jackson
- *
- *
+ *     比如:
+ *     <pre>
+ *         ...
+ *         {@code @Autowired}
+ *         private MyContextUtils myContextUtils;
+ *         ...
+ *         myContextUtils.springContext.xxx();
+ *         ...
+ *     </pre>
  * </p>
  *
  * @author Jiang Wanyu
@@ -27,6 +35,25 @@ package com.jwy.medusa.utils;
  */
 public class MyContextUtils {
 
+    @Autowired
+    private SpringContextUtils springContextUtils;
 
+    @Autowired
+    private JsonUtils jsonUtils;
 
+    /**
+     * 等同于注入并引用{@link SpringContextUtils}
+     * @return SpringContextUtils
+     */
+    public SpringContextUtils springContext() {
+        return springContextUtils;
+    }
+
+    /**
+     * 等同于注入并引用{@link JsonUtils}
+     * @return JsonUtils
+     */
+    public JsonUtils jsonUtils() {
+        return jsonUtils;
+    }
 }

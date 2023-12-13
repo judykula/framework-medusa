@@ -17,6 +17,7 @@ import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.utils.JsonUtils;
+import com.jwy.medusa.utils.MyContextUtils;
 import com.jwy.medusa.utils.SpringContextUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -61,15 +62,38 @@ import org.springframework.context.annotation.Import;
 @AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)
 public class MyCoreAutoConfiguration {
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -      UTILS   - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+    @Bean
+    public MyContextUtils myContextUtils(){
+        return new MyContextUtils();
+    }
+
     @Bean
     public SpringContextUtils springContextUtils() {
         return new SpringContextUtils();
     }
 
     @Bean
+    @ConditionalOnMissingBean
+    public JsonUtils jsonUtils(){
+        return new JsonUtils();
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -      App Started   - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+    @Bean
     public AppStartedListener appStartedListener(){
         return new AppStartedListener();
     }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - -  -  - - - - - - - -      JSON      - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
     // json custom
     //@Bean
@@ -84,10 +108,6 @@ public class MyCoreAutoConfiguration {
     //    return mapper;
     //}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public JsonUtils jsonUtils(){
-        return new JsonUtils();
-    }
+
 
 }
