@@ -97,6 +97,7 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
             errorAttributes.put(My_Error_Key, MyStatus.of(statusCode, My_Error_Msg));
         }
 
+        errorAttributes.put("timestamp", System.currentTimeMillis());
         /*在调用的时候 进行异常信息传递*/
         errorAttributes.put("exception", error.getClass());
         //TODO 需不需要控制stack长度，以避免数据过大？
