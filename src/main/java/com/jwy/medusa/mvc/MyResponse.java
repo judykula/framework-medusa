@@ -63,7 +63,7 @@ public class MyResponse<T> {
     private MyStatus mystatus;
     private T data;
     private Long latency;
-    private long timestamp = System.currentTimeMillis();
+    private long ts = System.currentTimeMillis();
 
     public MyResponse() {
     }

@@ -11,7 +11,11 @@
  */
 package com.jwy.medusa;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
@@ -21,10 +25,13 @@ import com.jwy.medusa.utils.MyContextUtils;
 import com.jwy.medusa.utils.SpringContextUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import java.util.TimeZone;
 
 /**
  * <p>
@@ -95,18 +102,14 @@ public class MyCoreAutoConfiguration {
     // - - - - - - - - - - - - - - - - - - -  -  - - - - - - - -      JSON      - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
-    // json custom
-    //@Bean
-    //public ObjectMapper objectMapper() {
-    //    ObjectMapper mapper = new ObjectMapper();
-    //    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    //    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    //    mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-    //    mapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-    //    mapper.registerModule(new JavaTimeModule());
-    //
-    //    return mapper;
-    //}
+     //json custom
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+        return builder -> builder.serializationInclusion(JsonInclude.Include.NON_NULL)
+                .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,SerializationFeature.FAIL_ON_EMPTY_BEANS,
+                        JsonParser.Feature.ALLOW_SINGLE_QUOTES)
+                .timeZone(TimeZone.getTimeZone("GMT+8"));
+    }
 
 
 

@@ -11,6 +11,7 @@
  */
 package com.jwy.medusa.mvc;
 
+import com.jwy.medusa.exception.ExceptionDesc;
 import com.jwy.medusa.exception.MyServiceException;
 import com.jwy.medusa.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
 import java.util.List;
@@ -40,6 +42,9 @@ import java.util.Objects;
 @Slf4j
 public class MyErrorAttributes extends DefaultErrorAttributes {
 
+    @Autowired
+    private JsonUtils jsonUtils;
+
     /**
      * 自定义出现异常时的key，要区别于系统自定义的数据，比如status 、message这些
      *
@@ -53,9 +58,6 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
      */
     private final String My_Error_Msg = "服务繁忙，请稍后再试";
 
-    @Autowired
-    private JsonUtils jsonUtils;
-
     /**
      * 重写这个方法，扩展{@code ErrorAttributes}
      *
@@ -67,22 +69,26 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
     public Map<String, Object> getErrorAttributes(ServerRequest request, ErrorAttributeOptions options) {
 
         Map<String, Object> errorAttributes = super.getErrorAttributes(request, options);
-        Throwable error = super.getError(request);//这个会throw exception，但是先不处理吧
+        Throwable throwble = super.getError(request);//这个会throw exception，但是先不处理吧
         int statusCode = (int) errorAttributes.get("status");
 
-        //log.warn("【ERROR063】Processing failed", error);
+        ExceptionDesc.ExceptionDescBuilder exceptionDescBuilder = ExceptionDesc.builder();
+        exceptionDescBuilder.fullName(throwble.getClass().getName());
+        exceptionDescBuilder.message(throwble.getMessage());
 
         /*虽然看到了super.getError()方法不会返回null，这里还是按照interface介绍，处理null问题*/
-        if(Objects.isNull(error)){
+        if(Objects.isNull(throwble)){
             errorAttributes.put(My_Error_Key, MyStatus.of(statusCode, My_Error_Msg));
         }
         /*处理业务异常信息，将code与msg载入异常机制*/
-        else if(error instanceof MyServiceException) {
-            MyServiceException myException = (MyServiceException) error;
-            errorAttributes.put(My_Error_Key, myException.status().get());
+        else if(throwble instanceof MyServiceException) {
+            MyServiceException myException = (MyServiceException) throwble;
+            MyStatus myStatus = myException.status().get();
+            errorAttributes.put(My_Error_Key, myStatus);
+            exceptionDescBuilder.myStatus(myStatus);
         }
         /*支持请求参数验证：@Validation*/
-        else if(error instanceof MethodArgumentNotValidException){
+        else if(throwble instanceof MethodArgumentNotValidException || throwble instanceof WebExchangeBindException){
             String errorMsg = "param error";
             if(null == errorAttributes.get("errors")) {
                 log.warn("Response validation information failed, set property 「server.error.includeBindingErrors=ALWAYS」to enable");
@@ -91,18 +97,15 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
                 errorMsg = fieldError.getDefaultMessage();
             }
             errorAttributes.put(My_Error_Key, MyStatus.of(statusCode, errorMsg));
+            log.warn("【MEA090】fail with {}: {}", throwble.getClass().getSimpleName(), errorMsg);
         }
         /*default 默认处理*/
         else{
             errorAttributes.put(My_Error_Key, MyStatus.of(statusCode, My_Error_Msg));
         }
 
-        errorAttributes.put("timestamp", System.currentTimeMillis());
-        /*在调用的时候 进行异常信息传递*/
-        errorAttributes.put("exception", error.getClass());
-        //TODO 需不需要控制stack长度，以避免数据过大？
-        String traceStr = jsonUtils.toString(error);
-        errorAttributes.put("exception_detail", traceStr);
+        errorAttributes.put("ts", System.currentTimeMillis());
+        errorAttributes.put("exception_desc", jsonUtils.toString(exceptionDescBuilder.build()));
 
         return errorAttributes;
     }

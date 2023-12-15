@@ -80,6 +80,7 @@ public class JsonUtils {
      */
     public String toString(Object obj){
         try {
+
             return objectMapper.writeValueAsString(obj);
         } catch (Exception e) {
             throw new MyJsonException(MyStatusz.JsonError, e);

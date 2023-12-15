@@ -60,17 +60,6 @@ public class MyMvcConfiguration {
         this.serverProperties = serverProperties;
     }
 
-    // see CodecsAutoConfiguration
-    //@Bean
-    //public CodecCustomizer myCodecCustomizer() {
-    //    return (configurer) -> {
-    //        configurer.registerDefaults(false);
-    //        //configurer.customCodecs().register(new ServerSentEventHttpMessageReader());
-    //        //configurer.customCodecs().register(new ServerSentEventHttpMessageWriter());
-    //        // ...
-    //    };
-    //}
-
     @Bean
     public WebFilter myAccessLogWebFilter(){
         return new MyAccessLogWebFilter();
@@ -96,4 +85,14 @@ public class MyMvcConfiguration {
         return exceptionHandler;
     }
 
+    //see CodecsAutoConfiguration
+    //@Bean
+    //public CodecCustomizer myCodecCustomizer() {
+    //    return (configurer) -> {
+    //        configurer.registerDefaults(false);
+    //        configurer.customCodecs().register(new ServerSentEventHttpMessageReader());
+    //        configurer.customCodecs().register(new ServerSentEventHttpMessageWriter());
+    //        // ...
+    //    };
+    //}
 }

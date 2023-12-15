@@ -66,9 +66,12 @@ public class MyErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler 
             error.remove("error");
             error.remove("message");
             error.remove("exception");
-            error.remove("exception_detail");
+            error.remove("trace");
+            //error.remove("exception_detail");
         }
-        error.remove("trace");
+
+        error.remove("errors");
+        error.remove("timestamp");
 
         return ServerResponse.status(getHttpStatus(error)).contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(error));
