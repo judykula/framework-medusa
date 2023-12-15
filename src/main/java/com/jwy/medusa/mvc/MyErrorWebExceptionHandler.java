@@ -67,7 +67,7 @@ public class MyErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler 
             error.remove("message");
             error.remove("exception");
             error.remove("trace");
-            //error.remove("exception_detail");
+            error.remove("exception_desc");
         }
 
         error.remove("errors");
