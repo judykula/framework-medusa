@@ -11,11 +11,10 @@
  */
 package com.jwy.medusa.mvc;
 
-import com.jwy.medusa.exception.ExceptionDesc;
 import com.jwy.medusa.exception.MyServiceException;
-import com.jwy.medusa.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.SerializationUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.validation.FieldError;
@@ -32,6 +31,19 @@ import java.util.Objects;
  *     扩展{@link org.springframework.boot.web.reactive.error.ErrorAttributes}的消息体
  *     以符合服务之间的异常消息传递以及统一输出
  * </p>
+ * <p>
+ *     <pre>
+ *     这里实现两部分扩展：
+ *     一、
+ *     添加"mystatus" {@link MyStatus}属性，以确保无论是正确的响应{@link MyResponse} 还是触发异常机制的响应，
+ *     都必然包含"mystatus"，这样在客户端请求的时候无需担心响应数据不统一的问题
+ *     二、
+ *     支持在remote请求的时候，进行exception tranfer的功能，提供将exception信息由服务端"传递"到请求端的能力，
+ *     需要同时配置
+ *     {@code my.exception.transfer.send=true} (服务端)
+ *     {@code my.exception.transfer.receive=true} (请求端)
+ *     </pre>
+ * </p>
  *
  * @see DefaultErrorAttributes
  * @see MyMvcConfiguration
@@ -41,9 +53,6 @@ import java.util.Objects;
  */
 @Slf4j
 public class MyErrorAttributes extends DefaultErrorAttributes {
-
-    @Autowired
-    private JsonUtils jsonUtils;
 
     /**
      * 自定义出现异常时的key，要区别于系统自定义的数据，比如status 、message这些
@@ -57,6 +66,9 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
      * 错误信息表示
      */
     private final String My_Error_Msg = "服务繁忙，请稍后再试";
+
+    @Value("${my.exception.transfer.send:false}")
+    private boolean exception_transfer_send;
 
     /**
      * 重写这个方法，扩展{@code ErrorAttributes}
@@ -72,10 +84,6 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
         Throwable throwble = super.getError(request);//这个会throw exception，但是先不处理吧
         int statusCode = (int) errorAttributes.get("status");
 
-        ExceptionDesc.ExceptionDescBuilder exceptionDescBuilder = ExceptionDesc.builder();
-        exceptionDescBuilder.fullName(throwble.getClass().getName());
-        exceptionDescBuilder.message(throwble.getMessage());
-
         /*虽然看到了super.getError()方法不会返回null，这里还是按照interface介绍，处理null问题*/
         if(Objects.isNull(throwble)){
             errorAttributes.put(My_Error_Key, MyStatus.of(statusCode, My_Error_Msg));
@@ -85,7 +93,6 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
             MyServiceException myException = (MyServiceException) throwble;
             MyStatus myStatus = myException.status().get();
             errorAttributes.put(My_Error_Key, myStatus);
-            exceptionDescBuilder.myStatus(myStatus);
         }
         /*支持请求参数验证：@Validation*/
         else if(throwble instanceof MethodArgumentNotValidException || throwble instanceof WebExchangeBindException){
@@ -105,8 +112,20 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
         }
 
         errorAttributes.put("ts", System.currentTimeMillis());
-        errorAttributes.put("exception_desc", jsonUtils.toString(exceptionDescBuilder.build()));
+
+        this.withSerialize(errorAttributes, throwble);
 
         return errorAttributes;
+    }
+
+    private void withSerialize(Map<String, Object> errorAttributes, Throwable throwble){
+        if(!exception_transfer_send) return;
+
+        try {
+            byte[] serialize = SerializationUtils.serialize(throwble);
+            errorAttributes.put("exception_serialize", serialize);
+        } catch (Exception e) {
+            log.warn("【MEA109】Serialize throwble fail: ", e);
+        }
     }
 }

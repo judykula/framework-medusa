@@ -13,6 +13,8 @@ package com.jwy.medusa.mvc;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 /**
  * <p>
  *     定义状态封装对象
@@ -39,7 +41,10 @@ import lombok.Getter;
  * @date 2023/11/22
  */
 @Getter
-public class MyStatus {
+public class MyStatus implements Serializable {
+
+    private static final long serialVersionUID = -7260329278483121972L;
+
     private Integer code;
     private String desc;
 

@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jwy.medusa.consul.MyConsulConfiguration;
+import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
@@ -65,8 +66,8 @@ import java.util.TimeZone;
  * @date 2023/10/26
  */
 @Configuration(proxyBeanMethods = false)
-@Import({MyConsulConfiguration.class, MyMvcConfiguration.class})
 @AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)
+@Import({MyConsulConfiguration.class, MyMvcConfiguration.class, MyFeignConfiguration.class})
 public class MyCoreAutoConfiguration {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

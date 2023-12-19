@@ -61,17 +61,17 @@ public class MyErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler 
     protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         Map<String, Object> error = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.ALL));
 
+        error.remove("trace");
+        error.remove("errors");
+        error.remove("timestamp");
+
         if(!request.path().startsWith("/feign")){
             error.remove("path");
             error.remove("error");
             error.remove("message");
             error.remove("exception");
-            error.remove("trace");
-            error.remove("exception_desc");
+            error.remove("exception_serialize");
         }
-
-        error.remove("errors");
-        error.remove("timestamp");
 
         return ServerResponse.status(getHttpStatus(error)).contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(error));

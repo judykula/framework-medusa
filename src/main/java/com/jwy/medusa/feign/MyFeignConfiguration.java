@@ -12,11 +12,15 @@
 package com.jwy.medusa.feign;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>
- *      TODO  some word
+ *     扩展feign
+ * </p>
+ * <p>
+ *     默认是开启状态，你可以通过配置{@code my.extension.feign=false}来关闭功能支持
  * </p>
  *
  * @author Jiang Wanyu
@@ -27,6 +31,9 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "my.extension.feign", matchIfMissing = true)
 public class MyFeignConfiguration {
 
-
+    @Bean
+    public MyErrorDecoder myErrorDecoder(){
+        return new MyErrorDecoder();
+    }
 
 }
