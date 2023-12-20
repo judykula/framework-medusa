@@ -16,11 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
-import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ import java.util.Objects;
 
 /**
  * <p>
- *     扩展{@link org.springframework.boot.web.reactive.error.ErrorAttributes}的消息体
+ *     扩展{@link DefaultErrorAttributes}的消息体
  *     以符合服务之间的异常消息传递以及统一输出
  * </p>
  * <p>
@@ -78,10 +78,10 @@ public class MyErrorAttributes extends DefaultErrorAttributes {
      * @return
      */
     @Override
-    public Map<String, Object> getErrorAttributes(ServerRequest request, ErrorAttributeOptions options) {
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
 
-        Map<String, Object> errorAttributes = super.getErrorAttributes(request, options);
-        Throwable throwble = super.getError(request);//这个会throw exception，但是先不处理吧
+        Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
+        Throwable throwble = super.getError(webRequest);//这个会throw exception，但是先不处理吧
         int statusCode = (int) errorAttributes.get("status");
 
         /*虽然看到了super.getError()方法不会返回null，这里还是按照interface介绍，处理null问题*/

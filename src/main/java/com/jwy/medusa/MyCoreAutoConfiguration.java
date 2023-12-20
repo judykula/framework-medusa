@@ -21,13 +21,13 @@ import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
-import com.jwy.medusa.utils.JsonUtils;
-import com.jwy.medusa.utils.MyContextUtils;
-import com.jwy.medusa.utils.SpringContextUtils;
+import com.jwy.medusa.utils.spring.JsonUtils;
+import com.jwy.medusa.utils.spring.MyContextUtils;
+import com.jwy.medusa.utils.spring.SpringContextUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -42,7 +42,7 @@ import java.util.TimeZone;
  *     <pre>
  *     consul注册{@link MyMvcConfiguration}
  *     MVC请求&异常机制处理{@link MyMvcConfiguration}
- *     上下文Context工具{@link com.jwy.medusa.utils.MyContextUtils}
+ *     上下文Context工具{@link MyContextUtils}
  *     关于JSON工具的定义等{@link JsonUtils}
  *     </pre>
  * </p>
@@ -54,7 +54,7 @@ import java.util.TimeZone;
  *     我们是支持覆盖的。
  * </p>
  * <p>
- *     {@code @AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)}这句的作用是因为在{@link MyMvcConfiguration}中定义的
+ *     {@code @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)}这句的作用是因为在{@link MyMvcConfiguration}中定义的
  *     {@link MyErrorAttributes}是需要覆盖掉其"内"原有的{@link org.springframework.boot.web.reactive.error.ErrorAttributes}的，
  *     所以必须在其初始化之前初始化
  * </p>
@@ -66,7 +66,7 @@ import java.util.TimeZone;
  * @date 2023/10/26
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore(ErrorWebFluxAutoConfiguration.class)
+@AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
 @Import({MyConsulConfiguration.class, MyMvcConfiguration.class, MyFeignConfiguration.class})
 public class MyCoreAutoConfiguration {
 
