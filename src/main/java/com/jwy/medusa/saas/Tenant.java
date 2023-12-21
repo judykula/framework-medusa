@@ -9,24 +9,32 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.utils;
+package com.jwy.medusa.saas;
+
+import lombok.Data;
 
 /**
  * <p>
- *     自定义HTTP的header
+ *     saas"多租户"系统的元数据存储dto
  * </p>
  *
  * @author Jiang Wanyu
  * @version 1.0
- * @date 2023/12/19
+ * @date 2023/12/20
  */
-public interface MyHttpHeaders {
+@Data
+public class Tenant {
 
-    /**请求源*/
-    String REQUEST_ORIGIN = "X-MY-ORIGIN";
+    /**"租户"ID*/
+    private String tenantId;
+    /**隔离级别*/
+    private String isolation;
 
-    /**SaaS - tenant, 请以json格式存储*/
-    String REQUEST_SaaS_TENANT = "X-MY-TENANT";
+    public Tenant() {
+    }
 
+    public Tenant(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
 }

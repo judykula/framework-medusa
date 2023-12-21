@@ -21,6 +21,7 @@ import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
+import com.jwy.medusa.saas.MySaaSConfiguration;
 import com.jwy.medusa.utils.spring.JsonUtils;
 import com.jwy.medusa.utils.spring.MyContextUtils;
 import com.jwy.medusa.utils.spring.SpringContextUtils;
@@ -67,7 +68,12 @@ import java.util.TimeZone;
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
-@Import({MyConsulConfiguration.class, MyMvcConfiguration.class, MyFeignConfiguration.class})
+@Import({
+        MyConsulConfiguration.class,
+        MyMvcConfiguration.class,
+        MyFeignConfiguration.class,
+        MySaaSConfiguration.class
+})
 public class MyCoreAutoConfiguration {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //

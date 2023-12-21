@@ -14,7 +14,6 @@ package com.jwy.medusa.mvc;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
@@ -48,7 +47,7 @@ import java.util.stream.Collectors;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name = "my.extension.mvc", matchIfMissing = true)
-@EnableConfigurationProperties({ ServerProperties.class, WebProperties.class })
+@EnableConfigurationProperties({ ServerProperties.class})
 public class MyMvcConfiguration {
 
     private final ServerProperties serverProperties;
