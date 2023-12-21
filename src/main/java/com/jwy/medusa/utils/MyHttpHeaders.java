@@ -22,11 +22,14 @@ package com.jwy.medusa.utils;
  */
 public interface MyHttpHeaders {
 
-    /**请求源*/
+    /**请求源的头信息*/
     String REQUEST_ORIGIN = "X-MY-ORIGIN";
 
-    /**SaaS - tenant, 请以json格式存储*/
-    String REQUEST_SaaS_TENANT = "X-MY-TENANT";
+    /**SaaS - tenant的头信息, 请以json格式存储*/
+    String REQUEST_SAAS_TENANT = "X-MY-TENANT";
+
+    /**灰度路由的头信息*/
+    String REQUEST_FEATURE = "X-MY-FEATURE";
 
 
 }

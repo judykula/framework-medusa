@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jwy.medusa.consul.MyConsulConfiguration;
+import com.jwy.medusa.feature.MyFeatureConfiguration;
 import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.mvc.MyErrorAttributes;
@@ -72,7 +73,8 @@ import java.util.TimeZone;
         MyConsulConfiguration.class,
         MyMvcConfiguration.class,
         MyFeignConfiguration.class,
-        MySaaSConfiguration.class
+        MySaaSConfiguration.class,
+        MyFeatureConfiguration.class
 })
 public class MyCoreAutoConfiguration {
 

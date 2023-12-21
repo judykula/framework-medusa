@@ -9,18 +9,19 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.saas;
+package com.jwy.medusa.feature;
 
 import com.jwy.medusa.utils.MyHttpHeaders;
 import com.jwy.medusa.utils.spring.MyContextUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>
- *     将需要透传的"SaaS头信息"增加到Feign请求上下文中
+ *     将需要透传的"灰度路由信息"增加到Feign请求上下文中
  * </p>
  *
  * @author Jiang Wanyu
@@ -28,25 +29,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2023/12/21
  */
 @Slf4j
-public class MySaasInterceptor implements RequestInterceptor {
+public class MyFeatureInterceptor implements RequestInterceptor {
 
     @Autowired
     private MyContextUtils myContextUtils;
 
     @Override
     public void apply(RequestTemplate template) {
-
-        Tenant tenant = this.myContextUtils.getTenant();
-        if (tenant == null) return;
-
-        try {
-            String tenantJson = this.myContextUtils.jsonUtils().toString(tenant);
-            template.header(MyHttpHeaders.REQUEST_SAAS_TENANT, tenantJson);
-        } catch (Exception e) {
-            log.error("【MSF046】tenant deserialize fail", e);
+        String feature = this.myContextUtils.getFeature();
+        if (StringUtils.isNotEmpty(feature)) {
+            template.header(MyHttpHeaders.REQUEST_FEATURE, feature);
         }
-
-        log.debug("【MSI049】feign request headers : {}", template.headers());
+        log.debug("【MFI043】feign request headers : {}" + template.headers());
     }
 
 }

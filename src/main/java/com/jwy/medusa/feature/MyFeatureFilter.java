@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.saas;
+package com.jwy.medusa.feature;
 
 import com.jwy.medusa.utils.MyHttpHeaders;
 import com.jwy.medusa.utils.spring.MyContextUtils;
@@ -27,16 +27,16 @@ import java.io.IOException;
 
 /**
  * <p>
- *      将需要透传的"SaaS头信息"增加到HTTP请求上下文中
+ *     将需要透传的"灰度路由信息"增加到HTTP请求上下文中
  * </p>
  *
  * @author Jiang Wanyu
  * @version 1.0
- * @date 2023/12/20
+ * @date 2023/12/21
  */
 @Slf4j
-@WebFilter(urlPatterns = {"/*"}, filterName = "MySaasFilter")
-public class MySaasFilter implements Filter {
+@WebFilter(urlPatterns = {"/*"}, filterName = "MyFeatureFilter")
+public class MyFeatureFilter implements Filter {
 
     @Autowired
     private MyContextUtils myContextUtils;
@@ -49,16 +49,11 @@ public class MySaasFilter implements Filter {
 
         if(requestURI.startsWith("/actuator")) return;
 
-        String tenantJson = request.getHeader(MyHttpHeaders.REQUEST_SAAS_TENANT);
-        try {
-            Tenant tenant = myContextUtils.jsonUtils().toObj(tenantJson, Tenant.class);
-            this.myContextUtils.setTenant(tenant);
-            log.debug("【MSF056】context with tenant: {}", tenant);
-        } catch (Exception e) {
-            log.error("【MSF058】tenant serialize fail", e);
-        }
+        String feature = request.getHeader(MyHttpHeaders.REQUEST_FEATURE);
+        this.myContextUtils.setFeature(feature);
+        log.debug("【MFF054】context with feature: {}", feature);
 
         filterChain.doFilter(servletRequest, servletResponse);
-        this.myContextUtils.clearTenantContext();
+        this.myContextUtils.clearFeatureContext();
     }
 }

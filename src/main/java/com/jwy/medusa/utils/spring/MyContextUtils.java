@@ -87,13 +87,22 @@ public class MyContextUtils {
     }
 
     /**
-     * 移除context中的内容
+     * 移除context中的的tenant内容
      *
      * 在"系统线程池（比如request）"的场景中，如果不想深入介入整个生命周期，
      * 我们必须在每个周期的间隙"重置"context数据，避免数据错误
      */
-    public void clearAllContext(){
+    public void clearTenantContext(){
         tenantContext.remove();
+    }
+
+    /**
+     * 移除context中的的feature内容
+     *
+     * 在"系统线程池（比如request）"的场景中，如果不想深入介入整个生命周期，
+     * 我们必须在每个周期的间隙"重置"context数据，避免数据错误
+     */
+    public void clearFeatureContext(){
         featureContext.remove();
     }
 }
