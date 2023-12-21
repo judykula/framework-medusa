@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.feign.interceptor;
+package com.jwy.medusa.feign;
 
 import com.jwy.medusa.utils.MyHttpHeaders;
 import feign.RequestInterceptor;

@@ -11,7 +11,6 @@
  */
 package com.jwy.medusa.feign;
 
-import com.jwy.medusa.feign.interceptor.MyOriginInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
