@@ -14,6 +14,9 @@ package com.jwy.medusa.feature;
 /**
  * <p>
  *     定义feature的命名, 匹配注册发现中心时的tag需要
+ * <p>
+ *     默认系统在启动时，注册到发现中心的tag：feature=normal，或者也可以不添加feature这个tag
+ *     具体情况可以看{@link MyFeatureConfiguration}了解
  * </p>
  *
  * @author Jiang Wanyu
