@@ -20,6 +20,7 @@ import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.feature.MyFeatureConfiguration;
 import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.listener.AppStartedListener;
+import com.jwy.medusa.loadbalance.MyLoadBalancerConfiguration;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.saas.MySaaSConfiguration;
@@ -74,7 +75,8 @@ import java.util.TimeZone;
         MyMvcConfiguration.class,
         MyFeignConfiguration.class,
         MySaaSConfiguration.class,
-        MyFeatureConfiguration.class
+        MyFeatureConfiguration.class,
+        MyLoadBalancerConfiguration.class
 })
 public class MyCoreAutoConfiguration {
 
