@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @date 2023/11/23
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration()
 @ConditionalOnProperty(name = "my.extension.mvc", matchIfMissing = true)
 @EnableConfigurationProperties({ ServerProperties.class})
 public class MyMvcConfiguration {

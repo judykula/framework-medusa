@@ -33,6 +33,7 @@ public final class FeatureTags {
      * 正常服务feature value，default
      */
     public static final String FEATURE_VALUE_NORMAL = "normal";
+    public static final String FEATURE_VALUE_DEFAULT = FEATURE_VALUE_NORMAL;
 
     //其他分流feature可以根据 各个业务自定义
 

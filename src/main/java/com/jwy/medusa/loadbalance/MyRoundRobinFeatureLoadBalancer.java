@@ -77,13 +77,13 @@ public class MyRoundRobinFeatureLoadBalancer extends MyRoundRobinLoadBalancerDup
     private Response<ServiceInstance> doFeatureProcess(ServiceInstanceListSupplier supplier, List<ServiceInstance> serviceInstances) {
 
         String tmpContextFeature = this.myContextUtils.getFeature();
-        String contextFeature = StringUtils.defaultIfEmpty(tmpContextFeature, FeatureTags.FEATURE_VALUE_NORMAL).toLowerCase();
+        String contextFeature = StringUtils.defaultIfEmpty(tmpContextFeature, FeatureTags.FEATURE_VALUE_DEFAULT).toLowerCase();
 
-        /* 默认的feature value为"normal", 如果想灰度其他流量，可以设置对应discover tag与feature*/
+        /* 默认的feature value为"normal", 如果想灰度其他流量，可以设置对应discover metadata与feature*/
         Map<String, List<ServiceInstance>> featureMap = Maps.newHashMap();
         for (ServiceInstance serviceInstance : serviceInstances) {
             String tmpServerFeature = serviceInstance.getMetadata().get(FeatureTags.FEATURE_TAG_KEY);
-            String serverFeature = StringUtils.defaultIfEmpty(tmpServerFeature, FeatureTags.FEATURE_VALUE_NORMAL).toLowerCase();
+            String serverFeature = StringUtils.defaultIfEmpty(tmpServerFeature, FeatureTags.FEATURE_VALUE_DEFAULT).toLowerCase();
 
             if(featureMap.containsKey(serverFeature))
                 featureMap.put(serverFeature, Lists.newArrayList());
@@ -94,7 +94,7 @@ public class MyRoundRobinFeatureLoadBalancer extends MyRoundRobinLoadBalancerDup
         List<ServiceInstance> serviceInstancesRes = featureMap.get(contextFeature);
         if(CollectionUtils.isEmpty(serviceInstancesRes)) {
             // 如果没有相同特征信息的，就从正常实例中选取
-            serviceInstancesRes = featureMap.get(FeatureTags.FEATURE_VALUE_NORMAL);
+            serviceInstancesRes = featureMap.get(FeatureTags.FEATURE_VALUE_DEFAULT);
         }
 
         return super.processInstanceResponse(supplier, serviceInstancesRes);
