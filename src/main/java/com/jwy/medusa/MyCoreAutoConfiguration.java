@@ -31,9 +31,14 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.TimeZone;
 
@@ -101,15 +106,6 @@ public class MyCoreAutoConfiguration {
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-    // - - - - - - - - - - - - - - - - - - - - - - - - - -      App Started   - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
-
-    @Bean
-    public AppStartedListener appStartedListener(){
-        return new AppStartedListener();
-    }
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // - - - - - - - - - - - - - - - - - - -  -  - - - - - - - -      JSON      - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
@@ -122,6 +118,26 @@ public class MyCoreAutoConfiguration {
                 .timeZone(TimeZone.getTimeZone("GMT+8"));
     }
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - -  -  - - - - - - - -      Beans      - - -- - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
+    @Bean
+    public AppStartedListener appStartedListener(){
+        return new AppStartedListener();
+    }
+
+    @Bean
+    @Primary
+    public TaskExecutor primaryTaskExecutor() {
+        return new ThreadPoolTaskExecutor();
+    }
+
+    @Bean
+    @LoadBalanced
+    @ConditionalOnMissingBean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
 }
