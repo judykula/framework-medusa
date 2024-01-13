@@ -47,7 +47,10 @@ public class MyFeatureFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String requestURI = request.getRequestURI();
 
-        if(requestURI.startsWith("/actuator")) return;
+        if(requestURI.startsWith("/actuator")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
 
         String feature = request.getHeader(MyHttpHeaders.REQUEST_FEATURE);
         this.myContextUtils.setFeature(feature);

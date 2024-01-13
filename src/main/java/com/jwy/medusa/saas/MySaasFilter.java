@@ -47,7 +47,10 @@ public class MySaasFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String requestURI = request.getRequestURI();
 
-        if(requestURI.startsWith("/actuator")) return;
+        if(requestURI.startsWith("/actuator")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
 
         String tenantJson = request.getHeader(MyHttpHeaders.REQUEST_SAAS_TENANT);
         try {
