@@ -14,9 +14,6 @@ package com.jwy.medusa.loadbalance;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClientConfiguration;
-import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -37,25 +34,5 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "my.extension.load-balance", matchIfMissing = true)
 @LoadBalancerClient(value = "feature-lb-provider", configuration = MyLoadBalanceAlgorithms.class)
 public class MyLoadBalancerConfiguration {
-
-    /**
-     * 指定使用 caching. D: 不指定也是默认的
-     *
-     * @param context
-     * @return
-     */
-    @Bean
-    public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
-            ConfigurableApplicationContext context) {
-
-        //withCaching  withHealthChecks  withSameInstancePreference
-        //只能选择一个，看需要自定义
-        return ServiceInstanceListSupplier.builder()
-                .withDiscoveryClient()
-                .withCaching()
-                //.withHealthChecks()
-                //.withSameInstancePreference()
-                .build(context);
-    }
 
 }
