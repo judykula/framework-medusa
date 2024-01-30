@@ -51,5 +51,9 @@ public class MyStatusz {
      * 处理json错误时的status
      */
     public static MyStatus JsonError =  MyStatus.of(1010, "process json error");
+    /**
+     * 生成id错误
+     */
+    public static MyStatus IdGenerateError =  MyStatus.of(1020, "id generate fail");
 
 }
