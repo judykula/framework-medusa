@@ -9,11 +9,11 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.utils.spring;
+package com.jwy.medusa.common.utils.spring;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jwy.medusa.exception.MyJsonException;
+import com.jwy.medusa.common.exception.MyJsonException;
 import com.jwy.medusa.mvc.MyStatusz;
 import org.springframework.beans.factory.annotation.Autowired;
 

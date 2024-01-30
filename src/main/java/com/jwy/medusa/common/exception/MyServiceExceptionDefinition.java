@@ -9,31 +9,22 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.exception;
+package com.jwy.medusa.common.exception;
 
 import com.jwy.medusa.mvc.MyStatus;
-import com.jwy.medusa.mvc.MyStatusz;
+
+import java.util.Optional;
 
 /**
  * <p>
- *     定义json exception
+ *     定义自定义异常信息
  * </p>
  *
  * @author Jiang Wanyu
  * @version 1.0
- * @date 2023/12/6
+ * @date 2023/12/5
  */
-public class MyJsonException extends MyServiceException{
+public interface MyServiceExceptionDefinition {
 
-    public MyJsonException() {
-        this(MyStatusz.JsonError);
-    }
-
-    public MyJsonException(MyStatus status) {
-        super(status);
-    }
-
-    public MyJsonException(MyStatus status, Throwable cause) {
-        super(status, cause);
-    }
+    Optional<MyStatus> status();
 }

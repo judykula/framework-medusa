@@ -11,7 +11,7 @@
  */
 package com.jwy.medusa.saas;
 
-import com.jwy.medusa.utils.spring.MyContextUtils;
+import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -11,8 +11,8 @@
  */
 package com.jwy.medusa.saas;
 
-import com.jwy.medusa.utils.MyHttpHeaders;
-import com.jwy.medusa.utils.spring.MyContextUtils;
+import com.jwy.medusa.common.utils.MyHttpHeaders;
+import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;

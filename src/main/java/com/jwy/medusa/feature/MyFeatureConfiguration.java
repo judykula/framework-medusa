@@ -11,7 +11,7 @@
  */
 package com.jwy.medusa.feature;
 
-import com.jwy.medusa.utils.MyHttpHeaders;
+import com.jwy.medusa.common.utils.MyHttpHeaders;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

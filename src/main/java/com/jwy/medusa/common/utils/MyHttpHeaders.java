@@ -9,22 +9,27 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.exception;
-
-import com.jwy.medusa.mvc.MyStatus;
-
-import java.util.Optional;
+package com.jwy.medusa.common.utils;
 
 /**
  * <p>
- *     定义自定义异常信息
+ *     自定义HTTP的header
  * </p>
  *
  * @author Jiang Wanyu
  * @version 1.0
- * @date 2023/12/5
+ * @date 2023/12/19
  */
-public interface MyServiceExceptionDefinition {
+public interface MyHttpHeaders {
 
-    Optional<MyStatus> status();
+    /**请求源的头信息*/
+    String REQUEST_ORIGIN = "X-MY-ORIGIN";
+
+    /**SaaS - tenant的头信息, 请以json格式存储*/
+    String REQUEST_SAAS_TENANT = "X-MY-TENANT";
+
+    /**灰度路由的头信息*/
+    String REQUEST_FEATURE = "X-MY-FEATURE";
+
+
 }

@@ -16,29 +16,28 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.jwy.medusa.common.RestTemplateConfiguration;
+import com.jwy.medusa.common.listener.AppStartedListener;
+import com.jwy.medusa.common.utils.spring.JsonUtils;
+import com.jwy.medusa.common.utils.spring.MyContextUtils;
+import com.jwy.medusa.common.utils.spring.SpringContextUtils;
 import com.jwy.medusa.consul.MyConsulConfiguration;
 import com.jwy.medusa.feature.MyFeatureConfiguration;
 import com.jwy.medusa.feign.MyFeignConfiguration;
-import com.jwy.medusa.listener.AppStartedListener;
 import com.jwy.medusa.loadbalance.MyLoadBalancerConfiguration;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import com.jwy.medusa.mvc.MyMvcConfiguration;
 import com.jwy.medusa.saas.MySaaSConfiguration;
-import com.jwy.medusa.utils.spring.JsonUtils;
-import com.jwy.medusa.utils.spring.MyContextUtils;
-import com.jwy.medusa.utils.spring.SpringContextUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.TimeZone;
 
@@ -81,7 +80,8 @@ import java.util.TimeZone;
         MyFeignConfiguration.class,
         MySaaSConfiguration.class,
         MyFeatureConfiguration.class,
-        MyLoadBalancerConfiguration.class
+        MyLoadBalancerConfiguration.class,
+        RestTemplateConfiguration.class
 })
 public class MyCoreAutoConfiguration {
 
@@ -131,13 +131,6 @@ public class MyCoreAutoConfiguration {
     @Primary
     public TaskExecutor primaryTaskExecutor() {
         return new ThreadPoolTaskExecutor();
-    }
-
-    @Bean
-    @LoadBalanced
-    @ConditionalOnMissingBean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 
 }

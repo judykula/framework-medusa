@@ -12,7 +12,7 @@
 package com.jwy.medusa.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jwy.medusa.exception.FeignRequestException;
+import com.jwy.medusa.common.exception.FeignRequestException;
 import com.jwy.medusa.mvc.MyErrorAttributes;
 import feign.Response;
 import feign.Util;

@@ -14,7 +14,7 @@ package com.jwy.medusa.loadbalance;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jwy.medusa.feature.FeatureTags;
-import com.jwy.medusa.utils.spring.MyContextUtils;
+import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

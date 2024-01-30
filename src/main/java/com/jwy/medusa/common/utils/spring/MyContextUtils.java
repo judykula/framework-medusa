@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.utils.spring;
+package com.jwy.medusa.common.utils.spring;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.jwy.medusa.saas.Tenant;

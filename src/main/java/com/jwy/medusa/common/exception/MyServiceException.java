@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.exception;
+package com.jwy.medusa.common.exception;
 
 import com.jwy.medusa.mvc.MyStatus;
 import com.jwy.medusa.mvc.MyStatusz;

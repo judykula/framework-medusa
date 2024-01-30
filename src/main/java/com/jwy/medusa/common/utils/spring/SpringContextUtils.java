@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.utils.spring;
+package com.jwy.medusa.common.utils.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -11,7 +11,7 @@
  */
 package com.jwy.medusa.feign;
 
-import com.jwy.medusa.utils.MyHttpHeaders;
+import com.jwy.medusa.common.utils.MyHttpHeaders;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Value;

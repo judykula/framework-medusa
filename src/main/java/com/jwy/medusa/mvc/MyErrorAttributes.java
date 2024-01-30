@@ -11,7 +11,7 @@
  */
 package com.jwy.medusa.mvc;
 
-import com.jwy.medusa.exception.MyServiceException;
+import com.jwy.medusa.common.exception.MyServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.beans.factory.annotation.Value;

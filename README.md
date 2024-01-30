@@ -38,7 +38,27 @@
   - 统一JSON工具
   - Feature、SaaS Tenant、UserInfo 等上下文内容
   - Spring上下文工具
-  
+      使用方式如下：
+      ```
+          @Autowired
+          private MyContextUtils myContextUtils;
+          ···
+          //使用SpringContextUtils
+          myContextUtils.springContext.xxx();
+          //使用jsonUtils
+          myContextUtils.jsonUtils.xxx();
+          ···
+      ```
+      更多细节请看MyContextUtils源码
+
+### 系统配置
+
+| item                               | description
+|------------------------------------|------------
+| sys.restTemplate.connection.timeout|restTemplate创建连接超时时间：默认5s，单位是millisecond
+| sys.restTemplate.read.timeout|restTemplate请求超时时间：默认10s，单位是millisecond
+ 
+
 ### 技术选型
 
 "MY"微服务架构使用如下技术实现重点功能：

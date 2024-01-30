@@ -9,7 +9,7 @@
  * · · _//                                       ||
  * · · · · · · · · · · · · · · · · · ·· ·    ___//
  */
-package com.jwy.medusa.exception;
+package com.jwy.medusa.common.exception;
 
 /**
  * <p>
