@@ -11,6 +11,7 @@
  */
 package com.jwy.medusa.mvc;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 /**
@@ -58,11 +59,16 @@ import lombok.Getter;
  * @date 2023/11/22
  */
 @Getter
+@Schema(description = "接口统一响应数据")
 public class MyResponse<T> {
 
+    @Schema(name = "mystatus", description = "服务接口的响应状态信息，包括状态码和描述信息。状态码与http code同步，判断优先级最高")
     private MyStatus mystatus;
+    @Schema(name = "data", description = "响应数据，JSON Object，具体对象取决于每个接口的具体响应")
     private T data;
+    @Schema(name = "latency", description = "接口的执行时间(不包括网络耗时)，单位是millisecond", example = "100")
     private Long latency;
+    @Schema(name = "ts", description = "接口响应时的时间戳, 单位是millisecond", example = "169232345346")
     private long ts = System.currentTimeMillis();
 
     public MyResponse() {

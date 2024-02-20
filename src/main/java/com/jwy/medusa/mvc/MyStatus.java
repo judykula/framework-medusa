@@ -11,6 +11,7 @@
  */
 package com.jwy.medusa.mvc;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -41,11 +42,15 @@ import java.io.Serializable;
  * @date 2023/11/22
  */
 @Getter
+@Schema(description = "接口响应状态信息")
 public class MyStatus implements Serializable {
 
     private static final long serialVersionUID = -7260329278483121972L;
 
+    @Schema(name = "code", description = "一般情况下等同于http code，但是优先级更高。" +
+            "通常情况下【只有】200表示响应成功，500表示服务异常，之外还有其他自定义code，参考具体接口")
     private Integer code;
+    @Schema(name = "desc", description = "概要描述信息，作为参考使用")
     private String desc;
 
     public MyStatus() {
