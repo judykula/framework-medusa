@@ -22,6 +22,7 @@ import com.jwy.medusa.common.utils.spring.JsonUtils;
 import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import com.jwy.medusa.common.utils.spring.SpringContextUtils;
 import com.jwy.medusa.consul.MyConsulConfiguration;
+import com.jwy.medusa.doc.SwaggerConfiguration;
 import com.jwy.medusa.feature.MyFeatureConfiguration;
 import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.loadbalance.MyLoadBalancerConfiguration;
@@ -66,8 +67,6 @@ import java.util.TimeZone;
  *     所以必须在其初始化之前初始化
  * </p>
  *
- * @see MyConsulConfiguration
- * @see MyMvcConfiguration
  * @author Jiang Wanyu
  * @version 1.0
  * @date 2023/10/26
@@ -81,7 +80,8 @@ import java.util.TimeZone;
         MySaaSConfiguration.class,
         MyFeatureConfiguration.class,
         MyLoadBalancerConfiguration.class,
-        RestTemplateConfiguration.class
+        RestTemplateConfiguration.class,
+        SwaggerConfiguration.class
 })
 public class MyCoreAutoConfiguration {
 

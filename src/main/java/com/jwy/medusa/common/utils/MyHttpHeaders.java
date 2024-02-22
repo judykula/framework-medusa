@@ -31,5 +31,20 @@ public interface MyHttpHeaders {
     /**灰度路由的头信息*/
     String REQUEST_FEATURE = "X-MY-FEATURE";
 
+    // —— —— —— —— —— —— —— —— —— —— —— —— —— —— —— ——
+
+    /**请求时的终端id*/
+    String REQUEST_CLIENT_ID = "X-MY-ClientId";
+    /**请求时的token*/
+    String REQUEST_ACCESS_TOKEN = "X-MY-AccessToken";
+    /**请求时的设备ID（APP）*/
+    String REQUEST_DEVICE_ID = "X-MY-DeviceId";
+
+    /**REQUEST_CLIENT_ID的描述信息*/
+    String REQUEST_CLIENT_ID_DESC = "客户端ID，不同的客户对应以下不同的值：" +
+            "<br> IOS端: ios " +
+            "<br> Android端: android " +
+            "<br> PC端: pc" +
+            "<br> 小程序: mini";
 
 }
