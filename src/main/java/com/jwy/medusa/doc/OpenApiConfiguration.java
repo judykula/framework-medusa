@@ -18,6 +18,8 @@ import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.HeaderParameter;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.apache.commons.lang3.StringUtils;
 import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.customizers.GlobalOperationCustomizer;
@@ -74,7 +76,9 @@ public class OpenApiConfiguration {
 
         return new OpenAPI()
                 .components( new Components()
-                        //.addSecuritySchemes("basicScheme", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic"))
+                        .addSecuritySchemes("basicScheme", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP).bearerFormat("JWT").scheme("bearer")
+                        )
                         .addParameters("GlobalTenant", new HeaderParameter().required(true)
                                 .name(MyHttpHeaders.REQUEST_SAAS_TENANT)
                                 .description("空间/租户")
@@ -106,6 +110,7 @@ public class OpenApiConfiguration {
     @Bean
     public GlobalOperationCustomizer globalOperationCustomizer(){
         return (operation, handlerMethod) -> operation
+                .addSecurityItem(new SecurityRequirement().addList("basicScheme"))
                 .addParametersItem(new HeaderParameter().$ref("GlobalTenant"))
                 .addParametersItem(new HeaderParameter().$ref("GlobalClientId"))
                 .addParametersItem(new HeaderParameter().$ref("GlobalToken"))

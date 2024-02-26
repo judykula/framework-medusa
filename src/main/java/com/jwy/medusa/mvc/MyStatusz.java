@@ -56,4 +56,9 @@ public class MyStatusz {
      */
     public static MyStatus IdGenerateError =  MyStatus.of(1020, "id generate fail");
 
+    /**
+     * 设置默认 未授权访问
+     */
+    public static MyStatus UNAUTHORIZED = MyStatus.of(4010, "Unauthorized accessed");
+
 }

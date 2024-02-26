@@ -57,6 +57,11 @@ public class MyMvcConfiguration {
     }
 
     @Bean
+    public MyJwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+        return new MyJwtAuthenticationTokenFilter();
+    }
+
+    @Bean
     public MyAccessLogFilter accessLogFilter() {
         return new MyAccessLogFilter();
     }

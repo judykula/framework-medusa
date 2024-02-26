@@ -78,13 +78,13 @@ public class MyAccessLogFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
         long end = System.currentTimeMillis();
 
-        if(log.isDebugEnabled() && !StringUtils.startsWithAny(url, "/actuator", "/swagger")){
+        if(log.isDebugEnabled() && !StringUtils.startsWithAny(url, "/actuator", "/swagger", "/v3/api-docs")){
             log.debug("【REQ200】【{}】【{}】【{}】【{}】【{}】", url, end-start, method, headers, params);
         }
     }
 
     /**
-     * get header s
+     * get headers
      * @param request
      * @return Empty if none
      */
