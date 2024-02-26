@@ -14,6 +14,7 @@ package com.jwy.medusa.mvc;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.util.ParameterMap;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.Filter;
@@ -24,7 +25,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,13 +72,13 @@ public class MyAccessLogFilter implements Filter {
         String url = request.getRequestURI();
         String method = request.getMethod();
         String headers = this.getHeaders(request);
-        String params = request.getParameterMap().toString();
+        String params = this.parameterMapToString(request.getParameterMap());
 
         long start = System.currentTimeMillis();
         filterChain.doFilter(servletRequest, servletResponse);
         long end = System.currentTimeMillis();
 
-        if(log.isDebugEnabled() && !url.startsWith("/actuator")){
+        if(log.isDebugEnabled() && !StringUtils.startsWithAny(url, "/actuator", "/swagger")){
             log.debug("【REQ200】【{}】【{}】【{}】【{}】【{}】", url, end-start, method, headers, params);
         }
     }
@@ -99,4 +102,34 @@ public class MyAccessLogFilter implements Filter {
 
         return headerMap.toString();
     }
+
+    /**
+     * {@link ParameterMap<String,String[]>} add toString()
+     *
+     * @param parameterMap
+     * @return
+     */
+    private String parameterMapToString(Map<String,String[]> parameterMap){
+
+        Iterator<Map.Entry<String, String[]>> i = parameterMap.entrySet().iterator();
+        if (! i.hasNext())
+            return "{}";
+
+        //sample from AbstractMap
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (;;) {
+            Map.Entry<String, String[]> entry = i.next();
+            String key = entry.getKey();
+            String value = Arrays.toString(entry.getValue());
+
+            sb.append(key);
+            sb.append('=');
+            sb.append(value);
+            if (! i.hasNext())
+                return sb.append('}').toString();
+            sb.append(',').append(' ');
+        }
+    }
+
 }
