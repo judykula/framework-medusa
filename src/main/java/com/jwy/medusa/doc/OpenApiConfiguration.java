@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
  */
 //@Profile("!prod")
 @Configuration(proxyBeanMethods = false)
-public class SwaggerConfiguration {
+public class OpenApiConfiguration {
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -45,8 +45,8 @@ public class SwaggerConfiguration {
     /**就是这个 "com.jwy" */
     private final String _GroupId;
 
-    public SwaggerConfiguration() {
-        String packageName = SwaggerConfiguration.class.getPackage().getName();
+    public OpenApiConfiguration() {
+        String packageName = OpenApiConfiguration.class.getPackage().getName();
         _GroupId = StringUtils.substringBefore(packageName, ".medusa");
     }
 

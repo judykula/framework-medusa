@@ -22,7 +22,7 @@ import com.jwy.medusa.common.utils.spring.JsonUtils;
 import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import com.jwy.medusa.common.utils.spring.SpringContextUtils;
 import com.jwy.medusa.consul.MyConsulConfiguration;
-import com.jwy.medusa.doc.SwaggerConfiguration;
+import com.jwy.medusa.doc.OpenApiConfiguration;
 import com.jwy.medusa.feature.MyFeatureConfiguration;
 import com.jwy.medusa.feign.MyFeignConfiguration;
 import com.jwy.medusa.loadbalance.MyLoadBalancerConfiguration;
@@ -81,7 +81,7 @@ import java.util.TimeZone;
         MyFeatureConfiguration.class,
         MyLoadBalancerConfiguration.class,
         RestTemplateConfiguration.class,
-        SwaggerConfiguration.class
+        OpenApiConfiguration.class
 })
 public class MyCoreAutoConfiguration {
 
