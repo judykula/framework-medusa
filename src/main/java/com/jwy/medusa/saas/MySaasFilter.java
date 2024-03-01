@@ -14,6 +14,7 @@ package com.jwy.medusa.saas;
 import com.jwy.medusa.common.utils.MyHttpHeaders;
 import com.jwy.medusa.common.utils.spring.MyContextUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.Filter;
@@ -47,7 +48,7 @@ public class MySaasFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String requestURI = request.getRequestURI();
 
-        if(requestURI.startsWith("/actuator")) {
+        if(StringUtils.startsWithAny(requestURI, "/actuator", "/swagger", "/v3/api-docs")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
