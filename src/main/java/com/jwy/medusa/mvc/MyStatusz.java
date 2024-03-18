@@ -26,7 +26,8 @@ package com.jwy.medusa.mvc;
  * </p>
  * <p></p>
  * <p>
- *     继承此类以扩展业务Status定义，所有业务code以<font color="red"> >=5位</font>数字表示
+ *     继承此类以扩展业务Status定义，所有业务code以<font color="red"> >=5位</font>数字表示，其中前两位代表不同的业务，后3位代表对应的状态，
+ *     比如用户业务可以为：10010，权限业务为:11010，这仅是例子
  * </p>
  *
  * @see MyStatus
