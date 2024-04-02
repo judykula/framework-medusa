@@ -42,6 +42,7 @@ public class MyServiceException extends RuntimeException implements MyServiceExc
     }
 
     public MyServiceException(MyStatus status) {
+        super(status.getDesc());
         this.status = status;
     }
 

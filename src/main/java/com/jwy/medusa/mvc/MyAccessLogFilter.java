@@ -16,6 +16,7 @@ import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.util.ParameterMap;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -45,6 +46,7 @@ import java.util.Set;
  * @date 2023/11/24
  */
 @Slf4j
+@Order(10)
 @WebFilter(urlPatterns = {"/*"}, filterName = "AccessLogFilter")
 public class MyAccessLogFilter implements Filter {
 

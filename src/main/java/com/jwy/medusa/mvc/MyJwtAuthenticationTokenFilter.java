@@ -15,6 +15,7 @@ import com.jwy.medusa.common.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -41,6 +42,7 @@ import java.util.List;
  * @date 2024/2/26
  */
 @Slf4j
+@Order(20)
 @Component
 public class MyJwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
