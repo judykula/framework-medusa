@@ -13,6 +13,7 @@ package com.jwy.medusa.mvc;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -42,6 +43,7 @@ import java.io.Serializable;
  * @date 2023/11/22
  */
 @Getter
+@ToString
 @Schema(description = "接口响应状态信息")
 public class MyStatus implements Serializable {
 

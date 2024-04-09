@@ -13,6 +13,7 @@ package com.jwy.medusa.mvc;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * <p>
@@ -59,6 +60,7 @@ import lombok.Getter;
  * @date 2023/11/22
  */
 @Getter
+@ToString
 @Schema(description = "接口统一响应数据")
 public class MyResponse<T> {
 
